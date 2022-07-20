@@ -28,6 +28,7 @@
 │   │   └── api.ts
 │   ├── global.ts
 │   ├── global.(css|less|sass|scss)
+│   ├── favicon.(ico|gif|png|jpg|jpeg|svg|avif|webp)
 │   └── loading.tsx
 ├── node_modules
 │   └── .cache
@@ -178,7 +179,7 @@ build 时的临时文件目录，比如入口文件、路由等，都会被临�
 
 ### plugin.ts 
 
-存在这个文件，会被当前项目加载为 Umi 插件，你可以在这里写一些需要插件级支撑的问题。
+存在这个文件，会被当前项目加载为 Umi 插件，你可以在这里实现一些插件级的功能。
 
 ```ts
 import type { IApi } from 'umi';
@@ -198,3 +199,30 @@ export default (api: IApi) => {
 };
 
 ```
+
+### favicon
+
+约定如果存在 `src/favicon.(ico|gif|png|jpg|jpeg|svg|avif|webp)` 文件，将会使用它作为构建网页的 `shortcut icon`，如存在 `src/favicon.png` 则构建时会生成： 
+
+```html
+<link rel="shortcut icon" href="/favicon.png">
+```
+
+支持多种文件后缀，按以下优先级匹配：
+
+```js
+const FAVICON_FILES = [
+  'favicon.ico',
+  'favicon.gif',
+  'favicon.png',
+  'favicon.jpg',
+  'favicon.jpeg',
+  'favicon.svg',
+  'favicon.avif',
+  'favicon.webp',
+];
+```
+
+如果约定方式不满足你的需求，可以使用 [favicons](../api/config#favicons) 配置。
+
+> 配置优先级会大于约定
